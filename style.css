@@ -1,0 +1,35 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+  background-size: 120px;
+  background-repeat: repeat;
+  animation: float 6s infinite linear;
+}
+@keyframes float {
+  from { background-position: 0 0; }
+  to { background-position: 0 200px; }
+}
+.container {
+  padding-top: 150px;
+}
+button {
+  padding: 15px 30px;
+  margin: 15px;
+  font-size: 18px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: black;
+  color: white;
+}
+#loader {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 32px;
+}
