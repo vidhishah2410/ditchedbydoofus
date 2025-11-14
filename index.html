@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ditched by Doofus</title>
+
+<style>
+    body {
+        background:#fff0d6;
+        font-family:'Comic Sans MS', cursive;
+        text-align:center;
+        padding-top:90px;
+        overflow:hidden;
+    }
+
+    /* LOADING SCREEN */
+    #loader {
+        position:fixed;
+        top:0; left:0;
+        width:100%; height:100%;
+        background:white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:30px;
+        z-index:20;
+        animation:fadeOut 2s ease forwards;
+        animation-delay:1.3s;
+    }
+
+    @keyframes fadeOut {
+        to { opacity:0; visibility:hidden; }
+    }
+
+    /* FLOATING CRYING EMOJIS */
+    .emoji {
+        position:absolute;
+        font-size:40px;
+        animation:floatUp 6s linear infinite;
+        opacity:0.7;
+    }
+
+    @keyframes floatUp {
+        0% { transform:translateY(100vh) rotate(0deg); }
+        100% { transform:translateY(-20vh) rotate(360deg); }
+    }
+
+    .box {
+        background:white;
+        padding:35px;
+        max-width:420px;
+        margin:auto;
+        border-radius:20px;
+        box-shadow:0 0 20px rgba(0,0,0,0.15);
+        transform:rotate(-1deg);
+        position:relative;
+        z-index:5;
+        animation:popUp 0.6s ease;
+    }
+
+    @keyframes popUp {
+        from { transform:scale(0.5) rotate(-5deg); opacity:0; }
+        to { transform:scale(1) rotate(-1deg); opacity:1; }
+    }
+
+    button {
+        margin:15px;
+        padding:15px 35px;
+        font-size:20px;
+        border:none;
+        border-radius:12px;
+        cursor:pointer;
+        background:#ff5f5f;
+        color:white;
+        font-weight:bold;
+        transition:0.2s;
+    }
+
+    button:hover {
+        transform:scale(1.15);
+    }
+</style>
+
+</head>
+<body>
+
+<div id="loader">Loading your disappointment… 😭</div>
+
+<!-- FLOATING EMOJIS -->
+<script>
+for (let i = 0; i < 15; i++) {
+    let e = document.createElement("div");
+    e.className = "emoji";
+    e.style.left = Math.random()*100 + "vw";
+    e.style.animationDelay = Math.random()*3 + "s";
+    e.innerHTML = "😭";
+    document.body.appendChild(e);
+}
+</script>
+
+<div class="box">
+    <h2>Are you free on 5th December? 🤨</h2>
+    <a href="page2.html"><button>No 😤</button></a>
+    <a href="page2.html"><button>No 🙄</button></a>
+</div>
+
+</body>
+</html>
