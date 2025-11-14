@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ditched by Doofus</title>
+
+<style>
+    body {
+        background:#ffe1ec;
+        font-family:'Comic Sans MS', cursive;
+        text-align:center;
+        padding-top:110px;
+        overflow:hidden;
+    }
+
+    /* FLOATING EXCITED EMOJIS */
+    .emoji {
+        position:absolute;
+        font-size:40px;
+        animation:floatUp 6s linear infinite;
+        opacity:0.8;
+    }
+
+    @keyframes floatUp {
+        0% { transform:translateY(100vh) rotate(0deg); }
+        100% { transform:translateY(-20vh) rotate(360deg); }
+    }
+
+    .box {
+        background:white;
+        padding:45px;
+        max-width:540px;
+        margin:auto;
+        border-radius:20px;
+        box-shadow:0 0 20px rgba(0,0,0,0.15);
+        font-size:22px;
+        transform:rotate(-1.5deg);
+        animation:popUp 0.7s ease;
+    }
+
+    @keyframes popUp {
+        from { transform:scale(0.5) rotate(-5deg); opacity:0; }
+        to { transform:scale(1) rotate(-1.5deg); opacity:1; }
+    }
+
+    strong { font-size:26px; }
+</style>
+
+</head>
+<body>
+
+<!-- FLOATING HAPPY EMOJIS -->
+<script>
+let emojis = ["🤩","✨","💃","😍","🥳"];
+for (let i = 0; i < 15; i++) {
+    let e = document.createElement("div");
+    e.className = "emoji";
+    e.style.left = Math.random()*100 + "vw";
+    e.style.animationDelay = Math.random()*3 + "s";
+    e.innerHTML = emojis[Math.floor(Math.random()*emojis.length)];
+    document.body.appendChild(e);
+}
+</script>
+
+<div class="box">
+<p>This was a very lame attempt to impress a nerd… 🤓❤️</p>
+<h2>
+See you at <br>
+<strong>Gigi, Khar on 3rd December at 8pm</strong> 💕<br><br>
+P.S: Dress cute… I’ll pick you up ;) 🚗💘
+</h2>
+</div>
+
+</body>
+</html>
