@@ -1,1 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YAYYYYY</title>
 
+<style>
+    body {
+        background:#fff0d6;
+        font-family:'Comic Sans MS', cursive;
+        text-align:center;
+        overflow:hidden;
+        padding-top:120px;
+    }
+
+    /* POPUP BOX */
+    .popup {
+        background:white;
+        padding:40px;
+        max-width:400px;
+        margin:auto;
+        border-radius:20px;
+        box-shadow:0 0 20px rgba(0,0,0,0.2);
+        animation:pop 0.7s ease forwards;
+        font-size:24px;
+        font-weight:bold;
+        z-index:5;
+        position:relative;
+    }
+
+    @keyframes pop {
+        0% { transform:scale(0.3); opacity:0; }
+        100% { transform:scale(1); opacity:1; }
+    }
+
+    /* YAY bouncing */
+    .yay {
+        position:absolute;
+        font-size:32px;
+        font-weight:bold;
+        white-space:nowrap;
+        animation: bounce 3s linear infinite;
+    }
+
+    @keyframes bounce {
+        0% { transform: translate(0,0); }
+        25% { transform: translate(40vw, -30vh); }
+        50% { transform: translate(-30vw, -10vh); }
+        75% { transform: translate(30vw, 30vh); }
+        100% { transform: translate(0,0); }
+    }
+
+    /* CONFETTI */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 14px;
+        background: red;
+        top: -20px;
+        opacity: 0.9;
+        animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh) rotate(360deg);
+            opacity: 1;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<div class="popup" id="popup">
+    YOU SAID YES!!! 🥹💖  
+    <br><br>
+    I AM SO HAPPY OMGGG
+</div>
+
+<script>
+/* YAY BOUNCING */
+setTimeout(() => {
+    for (let i = 0; i < 25; i++) {
+        let y = document.createElement("div");
+        y.className = "yay";
+        y.innerHTML = "YAY 🎉";
+        y.style.left = Math.random() * 90 + "vw";
+        y.style.top = Math.random() * 80 + "vh";
+        y.style.animationDuration = (2 + Math.random()*2) + "s";
+        y.style.animationDelay = (Math.random()*1.5) + "s";
+        document.body.appendChild(y);
+    }
+}, 900);
+
+
+/* CONFETTI EXPLOSION */
+function createConfetti() {
+    for (let i = 0; i < 150; i++) {
+        let c = document.createElement("div");
+        c.className = "confetti";
+
+        // Random colors
+        let colors = ["#ff4f4f","#ffaf00","#00c9ff","#ff77ff","#7dff7a","#fff700"];
+        c.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+        c.style.left = Math.random() * 100 + "vw";
+        c.style.animationDuration = (2 + Math.random()*3) + "s";
+        c.style.transform = `rotate(${Math.random()*360}deg)`;
+
+        document.body.appendChild(c);
+
+        // delete after animation
+        setTimeout(() => c.remove(), 5000);
+    }
+}
+
+setTimeout(createConfetti, 300); // Trigger confetti after popup
+</script>
+
+</body>
+</html>
