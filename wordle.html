@@ -76,14 +76,15 @@
     .absent  { background:#787c7e !important; color:white; }
 
     /* Bounce animation */
-    @keyframes bounce {
+    @keyframes bounceAnim {
         0% { transform:scale(1); }
-        30% { transform:scale(1.25); }
+        30% { transform:scale(1.2); }
+        60% { transform:scale(0.9); }
         100% { transform:scale(1); }
     }
 
     .bounce {
-        animation:bounce 0.35s ease;
+        animation:bounceAnim 0.45s ease;
     }
 </style>
 </head>
@@ -99,25 +100,8 @@
 <br>
 <button onclick="submitGuess()">Submit</button>
 
-<!-- Confetti Script -->
-<script>
-// lightweight confetti pop 🎉
-function popConfetti() {
-    const duration = 1500;
-    const end = Date.now() + duration;
-
-    (function frame() {
-        confetti({
-            particleCount: 4,
-            angle: Math.random() * 360,
-            spread: 60,
-            origin: { x: Math.random(), y: Math.random() - 0.2 }
-        });
-        if (Date.now() < end) requestAnimationFrame(frame);
-    })();
-}
-</script>
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<!-- Confetti -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
 <script>
 const answer = "MEGHU";
@@ -133,6 +117,7 @@ function createGrid() {
 }
 createGrid();
 
+
 function submitGuess() {
     let guess = document.getElementById("guess").value.toUpperCase();
     if (guess.length !== 5) return;
@@ -144,7 +129,7 @@ function submitGuess() {
         let cell = gridCells[start + i];
         cell.textContent = guess[i];
 
-        // Bounce animation
+        // bounce effect
         cell.classList.add("bounce");
         setTimeout(() => cell.classList.remove("bounce"), 350);
 
@@ -162,9 +147,19 @@ function submitGuess() {
 
     if (guess === answer) {
         setTimeout(() => {
-            popConfetti();
-            alert("Correct! You win a kiss 😌💋");
-        }, 800);
+            // Confetti 🎉
+            confetti({
+                particleCount: 250,
+                spread: 100,
+                origin: { y: 0.6 }
+            });
+
+            // After 2 seconds → redirect
+            setTimeout(() => {
+                window.location.href = "final.html";
+            }, 2000);
+
+        }, 600);
     }
 }
 </script>
