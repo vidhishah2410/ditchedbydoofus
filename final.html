@@ -1,125 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Finale</title>
-
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Final Surprise</title>
 <style>
-    body {
-        background:#fff6fb;
-        font-family: Arial, sans-serif;
-        text-align:center;
-        padding-top:90px;
-        overflow:hidden;
-    }
+  :root{
+    --card-w: 300px;
+    --card-h: 190px;
+  }
 
-    h1 {
-        font-size:28px;
-        margin-bottom:40px;
-        animation: fadeIn 1.5s ease;
-    }
+  html,body {
+    height:100%;
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color:#fff;
+  }
 
-    @keyframes fadeIn {
-        from { opacity:0; }
-        to { opacity:1; }
-    }
+  /* faded background image */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background: url('couple.jpg') center/cover no-repeat;
+    filter: brightness(0.34) blur(1px);
+    z-index: -1;
+  }
 
-    /* Card */
-    #card {
-        width:260px;
-        height:180px;
-        margin:auto;
-        background:white;
-        border-radius:12px;
-        box-shadow:0 0 15px rgba(0,0,0,0.15);
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        font-size:20px;
-        cursor:pointer;
-        transition:transform 0.7s;
-        transform-style:preserve-3d;
-        position:relative;
-    }
+  .wrap {
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:28px;
+    padding:20px;
+    box-sizing:border-box;
+    text-align:center;
+  }
 
-    .side {
-        position:absolute;
-        width:100%;
-        height:100%;
-        backface-visibility:hidden;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        border-radius:12px;
-        padding:15px;
-    }
+  h1 {
+    margin:0;
+    font-size:26px;
+    font-weight:600;
+    color:#fff;
+    line-height:1.2;
+    max-width:760px;
+    animation:fadeIn .8s ease both;
+  }
 
-    #front {
-        background:white;
-    }
+  /* card container */
+  .card-scene {
+    width: var(--card-w);
+    height: var(--card-h);
+    perspective: 1000px;
+  }
 
-    #back {
-        background:white;
-        transform:rotateY(180deg);
-        font-size:18px;
-        line-height:1.5;
-    }
+  .card {
+    width:100%;
+    height:100%;
+    position:relative;
+    transform-style: preserve-3d;
+    transition: transform 0.7s cubic-bezier(.2,.9,.3,1);
+    cursor: pointer;
+  }
 
-    /* Confetti */
-    .confetti {
-        position: fixed;
-        width: 10px;
-        height: 10px;
-        top: -10px;
-        animation: fall 3s linear forwards;
-    }
+  .card.flipped {
+    transform: rotateY(180deg);
+  }
 
-    @keyframes fall {
-        to {
-            transform: translateY(110vh) rotate(360deg);
-        }
-    }
+  .side {
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    padding:14px;
+    box-sizing:border-box;
+    background: rgba(255,255,255,0.9);
+    color:#111;
+    font-weight:600;
+    font-size:16px;
+  }
+
+  /* front face styling */
+  .front {
+    transform: rotateY(0deg);
+  }
+
+  /* back face styling */
+  .back {
+    transform: rotateY(180deg);
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    font-size:18px;
+    font-weight:600;
+    color:#111;
+  }
+
+  /* small note styling inside back */
+  .back .small {
+    font-size:15px;
+    font-weight:500;
+    color:#333;
+    line-height:1.4;
+  }
+
+  /* subtle pop when flipped */
+  .card.flipped .back { animation: popIn 0.35s ease both; }
+  @keyframes popIn {
+    from { transform: translateZ(0) scale(0.96); opacity:0; }
+    to   { transform: translateZ(0) scale(1); opacity:1; }
+  }
+
+  /* confetti pieces */
+  .confetti {
+    position:fixed;
+    width:10px;
+    height:12px;
+    top:-10px;
+    pointer-events:none;
+    z-index: 9999;
+    opacity: 0.95;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(110vh) rotate(360deg); }
+  }
+
+  /* responsive tweaks */
+  @media (max-width:420px){
+    :root{ --card-w:260px; --card-h:170px; }
+    h1 { font-size:20px; }
+  }
 </style>
-
 </head>
 <body>
 
-<h1>Well, I guess you should leave the coding to me now.</h1>
+<div class="wrap">
+  <h1>Well… I guess you should leave the coding to me now.</h1>
 
-<div id="card" onclick="openCard()">
-    <div class="side" id="front">Tap to open 💌</div>
-    <div class="side" id="back">
-        Thanks for playing along, idiot.<br>
-        Now come here and hug me. ❤️
+  <div class="card-scene" aria-hidden="false">
+    <div id="card" class="card" onclick="openCard()">
+      <div class="side front" id="front-side">
+        Tap to open 💌
+      </div>
+
+      <div class="side back" id="back-side" aria-hidden="true" style="transform:rotateY(180deg);">
+        <div>Thanks for playing along, idiot.</div>
+        <div class="small">Now come here and hug me baby ❤️</div>
+      </div>
     </div>
+  </div>
 </div>
 
+<!-- confetti library (optional small) -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
 <script>
-function openCard() {
-    document.getElementById("card").style.transform = "rotateY(180deg)";
+  let opened = false;
+  function openCard(){
+    if (opened) return;
+    opened = true;
+
+    const card = document.getElementById('card');
+    card.classList.add('flipped');
+    // reveal back for screen readers
+    document.getElementById('back-side').setAttribute('aria-hidden','false');
+
+    // launch confetti burst
     launchConfetti();
-}
 
-function launchConfetti() {
-    for (let i = 0; i < 60; i++) {
-        setTimeout(() => {
-            let c = document.createElement("div");
-            c.className = "confetti";
-            c.style.left = Math.random() * 100 + "vw";
-            c.style.background = randomColor();
-            c.style.animationDuration = (2 + Math.random()*2) + "s";
-            document.body.appendChild(c);
+    // small extra bursts
+    setTimeout(launchConfetti, 500);
+    setTimeout(launchConfetti, 1100);
+  }
 
-            setTimeout(() => c.remove(), 4000);
-        }, i * 30);
+  function launchConfetti(){
+    // use canvas-confetti for nice particles
+    if (window.confetti) {
+      confetti({
+        particleCount: 100,
+        spread: 100,
+        startVelocity: 30,
+        origin: { y: 0.35 }
+      });
+    } else {
+      // fallback simple DOM confetti if CDN blocked
+      for (let i=0;i<40;i++){
+        const e = document.createElement('div');
+        e.className = 'confetti';
+        e.style.left = Math.random()*100 + 'vw';
+        e.style.background = ['#ff6b81','#ffd56b','#8deaff','#ff9ed6','#b4ff8b'][Math.floor(Math.random()*5)];
+        e.style.animation = 'fall ' + (2 + Math.random()*2) + 's linear forwards';
+        e.style.transform = 'rotate(' + Math.random()*360 + 'deg)';
+        document.body.appendChild(e);
+        setTimeout(()=> e.remove(), 4200);
+      }
     }
-}
-
-function randomColor() {
-    let colors = ["#ff5f5f", "#ff9ed6", "#ffd54f", "#8deaff", "#b4ff8b"];
-    return colors[Math.floor(Math.random() * colors.length)];
-}
+  }
 </script>
 
 </body>
