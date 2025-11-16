@@ -8,7 +8,7 @@
 <style>
     body {
         background:#fff7d6;
-        font-family: Arial, Helvetica, sans-serif; /* NORMAL FONT */
+        font-family: Arial, Helvetica, sans-serif; /* NORMAL FONT EVERYWHERE */
         text-align:center;
         padding-top:120px;
         overflow:hidden;
@@ -22,36 +22,45 @@
         border-radius:20px;
         box-shadow:0 0 20px rgba(0,0,0,0.15);
         font-size:22px;
-        transform:rotate(-1deg);
+        transform:rotate(0deg); /* removed cute tilt to match clean font */
         animation:popUp 0.7s ease;
     }
 
     @keyframes popUp {
-        from { transform:scale(0.5) rotate(-5deg); opacity:0; }
-        to { transform:scale(1) rotate(-1deg); opacity:1; }
+        from { transform:scale(0.5); opacity:0; }
+        to { transform:scale(1); opacity:1; }
     }
 
-    strong {
-        font-size:26px;
+    h2 {
+        font-size:28px;
+        font-weight:700;
         color:#ff4b91;
+        margin-bottom:20px;
+    }
+
+    p {
+        font-size:20px;
+        font-weight:400;
+        color:#444;
+        line-height:1.6;
     }
 
     /* FLOATING YAY TEXT */
     .yay {
         position:absolute;
-        font-size:28px;
-        font-weight:bold;
+        font-size:26px;
+        font-weight:700;
         color:#ff2e7e;
         animation:bounce 3s linear infinite;
         opacity:0.9;
     }
 
     @keyframes bounce {
-        0% { transform:translate(0,0) rotate(0deg); }
-        25% { transform:translate(30px,-60px) rotate(20deg); }
-        50% { transform:translate(-20px,-120px) rotate(-20deg); }
-        75% { transform:translate(40px,-60px) rotate(10deg); }
-        100% { transform:translate(0,0) rotate(0deg); }
+        0% { transform:translate(0,0); }
+        25% { transform:translate(25px,-50px); }
+        50% { transform:translate(-20px,-120px); }
+        75% { transform:translate(35px,-50px); }
+        100% { transform:translate(0,0); }
     }
 </style>
 </head>
@@ -59,7 +68,7 @@
 <body>
 
 <script>
-// Create floating YAY! effects
+// Create floating YAY! elements
 for (let i = 0; i < 20; i++) {
     let y = document.createElement("div");
     y.className = "yay";
@@ -72,11 +81,10 @@ for (let i = 0; i < 20; i++) {
 </script>
 
 <div class="box">
-    <h2><strong>You finally reached the last page…</strong></h2>
+    <h2>You finally reached the last page…</h2>
     <p>
         And yes, this whole website was made<br>
         just to impress you (partially successful?).<br><br>
-
         I’m genuinely excited to see you. ❤️
     </p>
 </div>
