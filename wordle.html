@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wordle – Special Edition</title>
+
+<style>
+    body {
+        background:#fdf7e8;
+        font-family: Arial, sans-serif;
+        text-align:center;
+        padding-top:50px;
+        overflow:hidden;
+    }
+
+    h1 {
+        font-size:32px;
+        margin-bottom:10px;
+    }
+
+    #hint {
+        margin-top:10px;
+        font-size:16px;
+        color:#ff6b81;
+    }
+
+    .grid {
+        display:grid;
+        grid-template-columns:repeat(5, 60px);
+        gap:10px;
+        justify-content:center;
+        margin-top:30px;
+    }
+
+    .cell {
+        width:60px;
+        height:60px;
+        border:2px solid #ccc;
+        border-radius:8px;
+        font-size:28px;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-weight:bold;
+        background:white;
+        transition:0.2s;
+    }
+
+    input {
+        margin-top:30px;
+        padding:12px 20px;
+        font-size:20px;
+        border:2px solid #ff8ea4;
+        border-radius:10px;
+        text-align:center;
+    }
+
+    button {
+        margin-top:20px;
+        padding:12px 28px;
+        font-size:18px;
+        background:#ff6b81;
+        border:none;
+        color:white;
+        border-radius:12px;
+        cursor:pointer;
+        font-weight:bold;
+        transition:0.2s;
+    }
+
+    button:hover { transform:scale(1.1); }
+
+    .correct { background:#6aaa64 !important; color:white; }
+    .present { background:#c9b458 !important; color:white; }
+    .absent  { background:#787c7e !important; color:white; }
+
+    /* Bounce animation */
+    @keyframes bounce {
+        0% { transform:scale(1); }
+        30% { transform:scale(1.25); }
+        100% { transform:scale(1); }
+    }
+
+    .bounce {
+        animation:bounce 0.35s ease;
+    }
+</style>
+</head>
+
+<body>
+
+<h1>Wordle: Boyfriend Edition 😎💗</h1>
+<p id="hint">If you want a hint… you need to kiss me 😌💋</p>
+
+<div class="grid" id="grid"></div>
+
+<input type="text" id="guess" maxlength="5" placeholder="enter 5 letters">
+<br>
+<button onclick="submitGuess()">Submit</button>
+
+<!-- Confetti Script -->
+<script>
+// lightweight confetti pop 🎉
+function popConfetti() {
+    const duration = 1500;
+    const end = Date.now() + duration;
+
+    (function frame() {
+        confetti({
+            particleCount: 4,
+            angle: Math.random() * 360,
+            spread: 60,
+            origin: { x: Math.random(), y: Math.random() - 0.2 }
+        });
+        if (Date.now() < end) requestAnimationFrame(frame);
+    })();
+}
+</script>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+const answer = "MEGHU";
+let attempts = 0;
+
+function createGrid() {
+    const grid = document.getElementById("grid");
+    for (let i = 0; i < 30; i++) {
+        let cell = document.createElement("div");
+        cell.className = "cell";
+        grid.appendChild(cell);
+    }
+}
+createGrid();
+
+function submitGuess() {
+    let guess = document.getElementById("guess").value.toUpperCase();
+    if (guess.length !== 5) return;
+
+    const gridCells = document.querySelectorAll(".cell");
+    let start = attempts * 5;
+
+    for (let i = 0; i < 5; i++) {
+        let cell = gridCells[start + i];
+        cell.textContent = guess[i];
+
+        // Bounce animation
+        cell.classList.add("bounce");
+        setTimeout(() => cell.classList.remove("bounce"), 350);
+
+        if (guess[i] === answer[i]) {
+            setTimeout(() => cell.classList.add("correct"), i * 150);
+        } else if (answer.includes(guess[i])) {
+            setTimeout(() => cell.classList.add("present"), i * 150);
+        } else {
+            setTimeout(() => cell.classList.add("absent"), i * 150);
+        }
+    }
+
+    attempts++;
+    document.getElementById("guess").value = "";
+
+    if (guess === answer) {
+        setTimeout(() => {
+            popConfetti();
+            alert("Correct! You win a kiss 😌💋");
+        }, 800);
+    }
+}
+</script>
+
+</body>
+</html>
