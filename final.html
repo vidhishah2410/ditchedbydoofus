@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Finale</title>
+
+<style>
+    body {
+        background:#fff6fb;
+        font-family: Arial, sans-serif;
+        text-align:center;
+        padding-top:90px;
+        overflow:hidden;
+    }
+
+    h1 {
+        font-size:28px;
+        margin-bottom:40px;
+        animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from { opacity:0; }
+        to { opacity:1; }
+    }
+
+    /* Card */
+    #card {
+        width:260px;
+        height:180px;
+        margin:auto;
+        background:white;
+        border-radius:12px;
+        box-shadow:0 0 15px rgba(0,0,0,0.15);
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:20px;
+        cursor:pointer;
+        transition:transform 0.7s;
+        transform-style:preserve-3d;
+        position:relative;
+    }
+
+    .side {
+        position:absolute;
+        width:100%;
+        height:100%;
+        backface-visibility:hidden;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        border-radius:12px;
+        padding:15px;
+    }
+
+    #front {
+        background:white;
+    }
+
+    #back {
+        background:white;
+        transform:rotateY(180deg);
+        font-size:18px;
+        line-height:1.5;
+    }
+
+    /* Confetti */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        top: -10px;
+        animation: fall 3s linear forwards;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(110vh) rotate(360deg);
+        }
+    }
+</style>
+
+</head>
+<body>
+
+<h1>Well, I guess you should leave the coding to me now.</h1>
+
+<div id="card" onclick="openCard()">
+    <div class="side" id="front">Tap to open 💌</div>
+    <div class="side" id="back">
+        Thanks for playing along, idiot.<br>
+        Now come here and hug me. ❤️
+    </div>
+</div>
+
+<script>
+function openCard() {
+    document.getElementById("card").style.transform = "rotateY(180deg)";
+    launchConfetti();
+}
+
+function launchConfetti() {
+    for (let i = 0; i < 60; i++) {
+        setTimeout(() => {
+            let c = document.createElement("div");
+            c.className = "confetti";
+            c.style.left = Math.random() * 100 + "vw";
+            c.style.background = randomColor();
+            c.style.animationDuration = (2 + Math.random()*2) + "s";
+            document.body.appendChild(c);
+
+            setTimeout(() => c.remove(), 4000);
+        }, i * 30);
+    }
+}
+
+function randomColor() {
+    let colors = ["#ff5f5f", "#ff9ed6", "#ffd54f", "#8deaff", "#b4ff8b"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+</script>
+
+</body>
+</html>
